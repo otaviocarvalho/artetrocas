@@ -1,12 +1,11 @@
+### Data Store Class
 class Data(object):
     """ Data Store Class """
 
-    print "data py"
-
     products = {
-        'milk': {'price': 1.50, 'quantity': 10},
-        'eggs': {'price': 0.20, 'quantity': 100},
-        'cheese': {'price': 2.00, 'quantity': 10}
+        'Mondrian': {'school': 'Neoplasticism', 'quantity': 10},
+        'Picasso': {'school': 'Cubism', 'quantity': 100},
+        'Renoir': {'school': 'Impressionism', 'quantity': 10}
     }
 
     def __get__(self, obj, klas):

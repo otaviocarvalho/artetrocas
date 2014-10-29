@@ -5,12 +5,12 @@ import datetime
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-print sys.path
+#print sys.path
 
 from app.business.business import BusinessLogic
 
+### UI interaction class ###
 class Presentation(object):
-    """ UI interaction class """
     def __init__(self):
         self.business_logic = BusinessLogic()
 
@@ -34,6 +34,7 @@ class Presentation(object):
                 product))
 
 
+### UI routes with Apache Server ###
 @app.template_filter()
 def datetimefilter(value, format='%Y/%m/%d %H:%M'):
     """convert a datetime to a different format."""
@@ -44,12 +45,10 @@ app.jinja_env.filters['datetimefilter'] = datetimefilter
 @app.route("/")
 def main():
     ui = Presentation()
-    print "entrou main presentation"
     ui.get_product_list()
 
     return render_template('produtos.html', my_string="Wheeeee!",
         my_list=ui.get_product_list(), title="Index", current_time=datetime.datetime.now())
-        #my_list=[0,1,2,3,4,5], title="Index", current_time=datetime.datetime.now())
 
 @app.route("/home")
 def home():
