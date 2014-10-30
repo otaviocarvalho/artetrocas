@@ -9,6 +9,3 @@ class BusinessLogic(object):
 
     def product_information(self, product):
         return self.data['products'].get(product, None)
-
-
-
