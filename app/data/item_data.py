@@ -5,7 +5,7 @@ items = {
     'Monet': {'school': 'Impressionism', 'quantity': 5}
 }
 
-class Data(object):
+class ItemData(object):
     def __init__(self):
         self.items = items
 

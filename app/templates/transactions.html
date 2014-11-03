@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block page %}{{title}}{% endblock %}
+{% block heading %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+        <div class="row thumbnails">
+                {% if not list_transactions %}
+                <div><p><h3>Nenhuma transação existente</h3></p></div>
+                {% else %}
+                    <div class= "col-md-12">
+                        <div class="btn-group" style="margin: 10px;">
+                            <button type="button" class="btn btn-primary">Nova transação</button>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h3>Transações</h3></div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td><strong>#</strong></td>
+                                            <td><strong>Solicitante</strong></td>
+                                            <td><strong>Solicitado</strong></td>
+                                            <td><strong>Ítens</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for key,value in list_transactions.iteritems() %}
+                                        <tr>
+                                            <td>{{key}}</td>
+                                            <td>{{value.user_from}}</td>
+                                            <td>{{value.user_to}}</td>
+                                            <td>{{value.list_items}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                {% endif %}
+        </div>
+{% endblock %}
