@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block page %}{{title}}{% endblock %}
+{% block heading %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+        <div class="row thumbnails">
+                {% if not list_items %}
+                <div><p><h3>O usuário não possui nenhum item para trocar</h3></p></div>
+                {% else %}
+                    <div class= "col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h3>Listagem dos seus ítens</h3></div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td><strong>#</strong></td>
+                                            <td><strong>Título</strong></td>
+                                            <td><strong>Escola</strong></td>
+                                            <td><strong>Quantidade</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for key,value in list_items.iteritems() %}
+                                        <tr>
+                                            <td>{{key}}</td>
+                                            <td>{{value.title}}</td>
+                                            <td>{{value.school}}</td>
+                                            <td>{{value.quantity}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h3>Selecione os ítens para troca</h3></div>
+                            <div class="panel-body">
+                                <form id="form-exchange" action="/transaction/new/exchange" method="post">
+                                    <div class="input-group" style="margin: 10px;">
+                                        <span class="input-group-addon">$</span>
+                                        <input type="text" name="items_ids" class="form-control" placeholder="Lista de IDs de ítens, separados por vírgula">
+                                    </div>
+                                    <div class="input-group" style="margin: 10px;">
+                                        <span class="input-group-addon">@</span>
+                                        <input type="text" name="quantities" class="form-control" placeholder="Lista de Quantidades dos ítens, separados por vírgula">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <nav>
+                            <ul class="pager">
+                                <li class="previous disabled"><a href="#">&larr; Anterior</a></li>
+                                <li class="next"><a href="javascript:;" onclick="document.getElementById('form-exchange').submit();">Seguinte &rarr;</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                {% endif %}
+        </div>
+{% endblock %}

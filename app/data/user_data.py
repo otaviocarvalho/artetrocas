@@ -1,7 +1,7 @@
 users = {
-    'admin': {'full_name': 'Admin admin', 'wallet': 100},
-    'test': {'full_name': 'Test tester', 'wallet': 150},
-    'otavio': {'full_name': 'Otavio Carvalho', 'wallet': 300},
+    '0': {'name': 'admin', 'full_name': 'Admin admin', 'wallet': 100},
+    '1': {'name': 'test', 'full_name': 'Test tester', 'wallet': 150},
+    '2': {'name': 'otavio', 'full_name': 'Otavio Carvalho', 'wallet': 300},
 }
 
 class UserData(object):
@@ -15,7 +15,7 @@ class UserData(object):
         users_list = {}
         for key,value in self.users.iteritems():
             # Search by names
-            if (key.lower() == keyword.lower()):
+            if (value['name'].lower() == keyword.lower()):
                 users_list[key] = value
 
         return users_list

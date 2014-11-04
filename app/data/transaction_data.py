@@ -1,9 +1,8 @@
+import random
+
 transactions = {
-    '12345': {'user_from': 'test', 'user_to': 'otavio', 'list_items': {'Mondrian', 'Picasso', 'Renoir'} },
-    '12346': {'user_from': 'test', 'user_to': 'otavio', 'list_items': {'Mondrian', 'Picasso', 'Renoir'} },
-    '12347': {'user_from': 'test', 'user_to': 'otavio', 'list_items': {'Mondrian', 'Picasso', 'Renoir'} },
-    '54321': {'user_from': 'otavio', 'user_to': 'test', 'list_items': {'Mondrian'} },
-    '53321': {'user_from': 'otavio', 'user_to': 'test', 'list_items': {'Mondrian'} }
+    '12345': {'user_from': 'test', 'user_to': 'otavio', 'status': 'finished', 'list_items_from': [0, 1], 'list_items_from_qtd': [1, 1],
+                                                                                'list_items_to': [2, 3], 'list_items_to_qtd': [1, 1] },
 }
 
 class TransactionData(object):
@@ -16,11 +15,29 @@ class TransactionData(object):
     def get_transaction_key(self, keyword):
         transactions_list = {}
         for key,value in self.transactions.iteritems():
-            # Search by names
-            if (value['user_from'].lower() == keyword.lower()):
-                transactions_list[key] = value
+            # Show only active transactions
+            if value['status'] != 'empty':
+                # Search by names
+                if (value['user_from'].lower() == keyword.lower()):
+                    transactions_list[key] = value
 
         return transactions_list
 
+    def create_transaction(self, user_from):
+        # Find a key that isn't in the dictionary yet
+        new_key = random.randrange(10000, 99999)
+        while new_key in self.transactions.keys():
+            new_key = random.randrange(10000, 99999)
 
+        new_transaction = { 'user_from': user_from, 'user_to': None, 'status': 'empty', 'list_items': [], 'list_items_qtd': [] }
+        self.transactions[new_key] = new_transaction
+        return { new_key: new_transaction }
+
+    def set_transaction_item(self, transaction_id, item_id, item_qtd):
+        if transaction_id in self.transactions.keys():
+            self.transactions[transaction_id]['list_items'].extend(item_id)
+            self.transactions[transaction_id]['list_items_qtd'].extend(item_qtd)
+            return True
+        else:
+            return False
 

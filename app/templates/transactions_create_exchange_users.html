@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block page %}{{title}}{% endblock %}
+{% block heading %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+        <div class="row thumbnails">
+                {% if not list_users %}
+                <div><p><h3>Não existe nenhum usuário com o qual você possa realizar trocas</h3></p></div>
+                {% else %}
+                    <div class= "col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h3>Listagem dos usuários</h3></div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td><strong>#</strong></td>
+                                            <td><strong>Nome</strong></td>
+                                            <td><strong>Nome Completo</strong></td>
+                                            <td><strong>Produtos</strong></td>
+                                            <td><strong>Quantidades</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for key,value in list_users.iteritems() %}
+                                        <tr>
+                                            <td>{{key}}</td>
+                                            <td>{{value.name}}</td>
+                                            <td>{{value.full_name}}</td>
+                                            <td>{{value.products}}</td>
+                                            <td>{{value.quantities}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h3>Selecione os ítens pelos quais deseja trocar</h3></div>
+                            <div class="panel-body">
+                                <form id="form-exchange" action="/transaction/new/exchange/finish" method="post">
+                                    <div class="input-group" style="margin: 10px;">
+                                        <span class="input-group-addon">#</span>
+                                        <input type="text" name="user_id" class="form-control" placeholder="ID do usuário com o qual deseja trocar">
+                                    </div>
+
+                                    <div class="input-group" style="margin: 10px;">
+                                        <span class="input-group-addon">$</span>
+                                        <input type="text" name="items_ids" class="form-control" placeholder="Lista de IDs de ítens, separados por vírgula">
+                                    </div>
+                                    <div class="input-group" style="margin: 10px;">
+                                        <span class="input-group-addon">@</span>
+                                        <input type="text" name="quantities" class="form-control" placeholder="Lista de Quantidades dos ítens, separados por vírgula">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <nav>
+                            <ul class="pager">
+                                <li class="previous disabled"><a href="#">&larr; Anterior</a></li>
+                                <li class="next"><a href="javascript:;" onclick="document.getElementById('form-exchange').submit();">Seguinte &rarr;</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                {% endif %}
+        </div>
+{% endblock %}

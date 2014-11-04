@@ -9,23 +9,10 @@
 {% endblock %}
 {% block content %}
         <div class="row thumbnails">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                    <div class="alert alert-success" role="alert">
-                        {% for message in messages %}
-                            {{ message }}
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                {% endwith %}
-
                 {% if not list_transactions %}
                 <div><p><h3>Nenhuma transação existente</h3></p></div>
                 {% else %}
                     <div class= "col-md-12">
-                        <div class="btn-group" style="margin: 10px;">
-                            <a href="/transaction/new" class="btn btn-primary">Nova transação</a>
-                        </div>
                         <div class="panel panel-default">
                             <div class="panel-heading"><h3>Transações</h3></div>
                                 <table class="table">
@@ -34,11 +21,10 @@
                                             <td><strong>#</strong></td>
                                             <td><strong>Solicitante</strong></td>
                                             <td><strong>Solicitado</strong></td>
-                                            <td><strong>Status</strong></td>
                                             <td><strong>Ítens Solicitante</strong></td>
                                             <td><strong>Ítens Solicitado</strong></td>
-                                            <td><strong>Qtds. Solicitante</strong></td>
-                                            <td><strong>Qtds. Solicitado</strong></td>
+                                            <td><strong>Qtd. Ítens Solicitante</strong></td>
+                                            <td><strong>Qtd. Ítens Solicitado</strong></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -47,7 +33,6 @@
                                             <td>{{key}}</td>
                                             <td>{{value.user_from}}</td>
                                             <td>{{value.user_to}}</td>
-                                            <td>{{value.status}}</td>
                                             <td>{{value.list_items}}</td>
                                         </tr>
                                         {% endfor %}

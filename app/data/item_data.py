@@ -1,8 +1,8 @@
 items = {
-    'Mondrian': {'school': 'Neoplasticism', 'quantity': 10},
-    'Picasso': {'school': 'Cubism', 'quantity': 100},
-    'Renoir': {'school': 'Impressionism', 'quantity': 10},
-    'Monet': {'school': 'Impressionism', 'quantity': 5}
+    0: { 'title': 'Mondrian', 'school': 'Neoplasticismo', 'quantity': 10, 'user_id': 1 },
+    1: { 'title': 'Picasso', 'school': 'Cubismo', 'quantity': 100, 'user_id': 1 },
+    2: { 'title': 'Renoir', 'school': 'Impressionismo', 'quantity': 10, 'user_id': 2 },
+    3: { 'title': 'Monet', 'school': 'Impressionismo', 'quantity': 20, 'user_id': 2 }
 }
 
 class ItemData(object):
@@ -16,10 +16,19 @@ class ItemData(object):
         items_list = {}
         for key,value in self.items.iteritems():
             # Search by names
-            if (key.lower() == keyword.lower()):
+            #if (value['title'].lower() == keyword.lower()):
+            if value['title'].lower().find(keyword.lower()) != -1:
                 items_list[key] = value
             # Search by school
-            elif (value['school'].lower() == keyword.lower()):
+            elif value['school'].lower().find(keyword.lower()) != -1:
+                items_list[key] = value
+
+        return items_list
+
+    def get_items_user(self, user_id):
+        items_list = {}
+        for key,value in self.items.iteritems():
+            if value['user_id'] == user_id:
                 items_list[key] = value
 
         return items_list
