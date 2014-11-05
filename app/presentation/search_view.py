@@ -25,7 +25,7 @@ class SearchView(object):
         if request.method == 'GET':
             return render_template('produtos.html', list_items=search_view.get_items_list(), title="Search")
         elif request.method == 'POST':
-            print request.form
+            #print request.form
             return render_template('produtos.html', list_items=search_view.get_items_list_key(request.form['search-key']), title="Search")
 
     @app.route("/search/<keyword>")

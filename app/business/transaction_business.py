@@ -16,7 +16,18 @@ class TransactionBusiness(object):
     def create_transaction(self, user_id):
         return self.transaction_data.create_transaction(user_id)
 
-    def set_transaction_item(self, transaction_id, item_id, item_qtd):
+    def set_transaction_item_from(self, transaction_id, item_id, item_qtd):
         # Verify items before insert
-        return self.transaction_data.set_transaction_item(transaction_id, item_id, item_qtd)
+        return self.transaction_data.set_transaction_item_from(transaction_id, item_id, item_qtd)
 
+    def set_transaction_item_to(self, transaction_id, user_id, item_id, item_qtd):
+        # Verify items before insert
+        # Get username by user_id
+        user_name = self.user_data.get_user_id(user_id)
+        return self.transaction_data.set_transaction_item_to(transaction_id, user_name, item_id, item_qtd)
+
+    def get_transaction_by_id(self, transaction_id):
+        return self.transaction_data.get_transaction_by_id(transaction_id)
+
+    def add_transaction(self, transaction):
+        return self.transaction_data.add_transaction(transaction)
