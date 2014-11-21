@@ -18,10 +18,10 @@ class HomeView(FlaskView):
 
     def __init__(self):
         #self.business_logic = Business()
-        self.business_logic = SearchBusiness()
+        self.search_business_logic = SearchBusiness()
 
     def get_items_list(self):
-        return self.business_logic.items_list();
+        return self.search_business_logic.items_list();
 
     #@app.route("/")
     def index(self):

@@ -34,7 +34,6 @@ class ItemData(object):
 
             return items_list
 
-
     instance = None
     def __new__(cls):
         if not ItemData.instance:
