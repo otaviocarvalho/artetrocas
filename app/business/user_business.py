@@ -23,6 +23,7 @@ class UserBusiness(object):
         # self.item_data
 
         list_users = self.user_data.get_users_clean(my_user_id)
+        print list_users
         # Get list of items per user
         for key_user,value_user in list_users.iteritems():
             list_items = self.item_data.get_items_user(key_user)

@@ -5,35 +5,41 @@ users = {
 }
 
 class UserData(object):
-    def __init__(self):
-        self.users = users
+    class __UserData:
+        def __init__(self):
+            self.users = users
 
-    def get_users(self):
-        return self.users
+        def get_users(self):
+            return self.users
 
-    def get_users_clean(self, user_id):
-        dict_aux = dict(self.users)
-        del dict_aux[user_id]
-        return dict_aux
+        def get_users_clean(self, user_id):
+            dict_aux = dict(self.users)
+            del dict_aux[user_id]
+            return dict_aux
 
-    def get_user_key(self, keyword):
-        users_list = {}
-        for key,value in self.users.iteritems():
-            # Search by names
-            if (value['name'].lower() == keyword.lower()):
-                users_list[key] = value
+        def get_user_key(self, keyword):
+            users_list = {}
+            for key,value in self.users.iteritems():
+                # Search by names
+                if (value['name'].lower() == keyword.lower()):
+                    users_list[key] = value
 
-        return users_list
+            return users_list
 
-    def get_user_id(self, user_id):
-        users_list = {}
-        for key,value in self.users.iteritems():
-            # Search by names
-            if (key == user_id):
-                users_list[key] = value
+        def get_user_id(self, user_id):
+            users_list = {}
+            for key,value in self.users.iteritems():
+                # Search by names
+                if (key == user_id):
+                    users_list[key] = value
 
-        return users_list
+            return users_list
 
+    instance = None
+    def __new__(cls):
+        if not UserData.instance:
+            UserData.instance = UserData.__UserData()
+        return UserData.instance
 
 
 

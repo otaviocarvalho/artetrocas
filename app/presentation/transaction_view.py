@@ -1,5 +1,6 @@
 from app import app
 from flask import render_template, request, session, redirect, flash
+from flask.ext.classy import FlaskView
 
 import sys
 reload(sys)
@@ -12,35 +13,26 @@ from app.business.item_business import ItemBusiness
 active_transaction = {72580: {'status': 'finished', 'list_items_to_qtd': [], 'list_items_from_qtd': [], 'list_items_from': [], 'user_to': None, 'user_from': None, 'list_items_to': []}}
 active_transaction_key = active_transaction.keys()[0]
 
-class TransactionView(object):
+class TransactionView(FlaskView):
+    route_base = '/transaction'
+
     def __init__(self):
         self.transaction_business_logic = TransactionBusiness()
         self.user_business_logic = UserBusiness()
         self.item_business_logic = ItemBusiness()
 
-        #session['user'] = 'otavio'
-        #session['user_id'] = 2
-        session['user'] = 'test'
-        session['user_id'] = 1
-        session['user_type'] = 'user'
-        #if 'active_transaction' in session:
-            #self.active_transaction = session['active_transaction']
-        #else:
-            #self.active_transaction = '99999'
-            #session['active_transaction'] = '99999'
-        #session['active_transaction'] = None
-
     def get_transactions_list(self):
         return self.transaction_business_logic.transactions_list()
 
-    def get_transactions_list_key(self):
-        return self.transaction_business_logic.transactions_list_key(session['user'])
+    def get_transactions_list_key(self, user):
+        return self.transaction_business_logic.transactions_list_key(user)
 
     def create_transaction(self):
-        return self.transaction_business_logic.create_transaction(session['user'])
+        pass
+        #return self.transaction_business_logic.create_transaction(session['user'])
 
-    def get_user_items(self):
-        return self.user_business_logic.get_user_items(session['user_id'])
+    def get_user_items(self, user):
+        return self.user_business_logic.get_user_items(user)
 
     def get_users_exchange_items(self, ids, qtds, user_id):
         return self.user_business_logic.get_users_exchange_items(ids, qtds, user_id)
@@ -64,9 +56,9 @@ class TransactionView(object):
                 return v['name']
 
 
-    @app.route("/transaction/new/exchange/finish", methods=['GET', 'POST'])
-    def new_transaction_finish():
-        transaction_view = TransactionView()
+    #@app.route("/transaction/new/exchange/finish", methods=['GET', 'POST'])
+    def new_transaction_finish(self):
+        #transaction_view = TransactionView()
 
         #print 'active_transaction finish'
         print "/transaction/new/exchange/finish"
@@ -103,9 +95,9 @@ class TransactionView(object):
         #return render_template('transactions.html', list_transactions=transaction_view.get_transactions_list_key(), title="Transaction")
         return render_template('transactions.html', list_transactions=transaction_view.get_transactions_list(), title="Transaction")
 
-    @app.route("/transaction/new/exchange", methods=['GET', 'POST'])
-    def new_transaction_users():
-        transaction_view = TransactionView()
+    #@app.route("/transaction/new/exchange", methods=['GET', 'POST'])
+    def new_transaction_users(self):
+        #transaction_view = TransactionView()
 
         # Insert items into transaction
         form_ids = request.form['items_ids'].split(',')
@@ -120,31 +112,38 @@ class TransactionView(object):
         transaction_view.add_transaction(active_transaction)
         print "/transaction/new/exchange"
         print active_transaction
+        #print transaction_view.get_users_exchange_items(form_ids, form_qtd, session['user_id'])
 
         # Get list of users to trade
         #return render_template('transactions_create_exchange_users.html', list_users=transaction_view.get_users_exchange_items(form_ids, form_qtd, session['user_id']), title="New Transaction - Select User")
-        return render_template('transactions_create_exchange_users.html', list_users=transaction_view.get_users_exchange_items(form_ids, form_qtd, session['user_id']), title="New Transaction - Select User")
 
-    @app.route("/transaction/new", methods=['GET', 'POST'])
-    def new_transaction():
-        transaction_view = TransactionView()
+        #return render_template('transactions_create_exchange_users.html', list_users=transaction_view.get_users_exchange_items(form_ids, form_qtd, session['user_id']), title="New Transaction - Select User")
 
+    #@app.route("/transaction/new")
+    def new(self):
         # Create new transaction if there wasn't one active yet
-        #if not 'active_transaction' in session:
-        #create_transaction_id = transaction_view.create_transaction()
-        #print create_transaction_id
-        #session['active_transaction'] = create_transaction_id
+        if not 'active_transaction' in session:
+            create_transaction_id = self.create_transaction()
+            print create_transaction_id
+            session['active_transaction'] = create_transaction_id
 
-        #active_transaction[active_transaction_key]['list_items_from_qtd'].append(2)
-        #print active_transaction
+        return render_template('transactions_create_user_items.html', list_items=self.get_user_items(session['user']), title="New Transaction - User Items")
 
-        print "/transaction/new"
-        return render_template('transactions_create_user_items.html', list_items=transaction_view.get_user_items(), title="New Transaction - User Items")
-
-    @app.route("/transaction", methods=['GET', 'POST'])
-    def transaction():
-        transaction_view = TransactionView()
+    #@app.route('/transaction')
+    def index(self):
+        #transaction_view = TransactionView()
         print "/transaction"
         print active_transaction
 
-        return render_template('transactions.html', list_transactions=transaction_view.get_transactions_list_key(), title="Transaction")
+        session['user'] = 'test'
+        session['user_id'] = 1
+        #session['user'] = 'otavio'
+        #session['user_id'] = 2
+
+        #if 'active_transaction' in session:
+            #self.active_transaction = session['active_transaction']
+
+        return render_template('transactions.html', list_transactions=self.get_transactions_list_key(session['user']), title="Transaction")
+
+
+TransactionView.register(app)

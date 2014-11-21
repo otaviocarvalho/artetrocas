@@ -1,5 +1,6 @@
 from app import app
 from flask import render_template, request
+from flask.ext.classy import FlaskView
 
 import sys
 reload(sys)
@@ -7,7 +8,9 @@ sys.setdefaultencoding('utf-8')
 
 from app.business.search_business import SearchBusiness
 
-class SearchView(object):
+class SearchView(FlaskView):
+    route_base = '/search'
+
     def __init__(self):
         self.search_business_logic = SearchBusiness()
 
@@ -17,19 +20,15 @@ class SearchView(object):
     def get_items_list_key(self,keyword):
         return self.search_business_logic.items_list_key(keyword);
 
+    def index(self):
+        return render_template('produtos.html', list_items=self.get_items_list(), title="Search")
 
-    @app.route("/search", methods=['GET', 'POST'])
-    def search():
-        search_view = SearchView()
+    def post(self):
+        return render_template('produtos.html', list_items=self.get_items_list_key(request.form['search-key']), title="Search")
 
-        if request.method == 'GET':
-            return render_template('produtos.html', list_items=search_view.get_items_list(), title="Search")
-        elif request.method == 'POST':
-            #print request.form
-            return render_template('produtos.html', list_items=search_view.get_items_list_key(request.form['search-key']), title="Search")
+    #@app.route('/search/<keyword>')
+    #def search_key(self, keyword):
+        #return render_template('produtos.html', list_items=self.get_items_list_key(keyword), title=keyword)
 
-    @app.route("/search/<keyword>")
-    def search_key(keyword=None):
-        search_view = SearchView()
-        #return render_template('produtos.html', list_items=search_view.get_items_list(), title="Search")
-        return render_template('produtos.html', list_items=search_view.get_items_list_key(keyword), title=keyword)
+SearchView.register(app)
+

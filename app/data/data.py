@@ -6,23 +6,28 @@ items = {
 }
 
 class Data(object):
-    def __init__(self):
-        self.items = items
+    class __Data:
+        def __init__(self):
+            self.items = items
 
-    def get_items(self):
-        return self.items
+        def get_items(self):
+            return self.items
 
-    def get_item_key(self, keyword):
-        items_list = {}
-        for key,value in self.items.iteritems():
-            # Search by names
-            if (key.lower() == keyword.lower()):
-                items_list[key] = value
-            # Search by school
-            elif (value['school'].lower() == keyword.lower()):
-                items_list[key] = value
+        def get_item_key(self, keyword):
+            items_list = {}
+            for key,value in self.items.iteritems():
+                # Search by names
+                if (key.lower() == keyword.lower()):
+                    items_list[key] = value
+                # Search by school
+                elif (value['school'].lower() == keyword.lower()):
+                    items_list[key] = value
 
-        return items_list
+            return items_list
 
-
+    instance = None
+    def __new__(cls):
+        if not Data.instance:
+            Data.instance = Data.__Data()
+        return Data.instance
 
