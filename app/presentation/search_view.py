@@ -21,10 +21,10 @@ class SearchView(FlaskView):
         return self.search_business_logic.items_list_key(keyword);
 
     def index(self):
-        return render_template('produtos.html', list_items=self.get_items_list(), title="Search")
+        return render_template('produtos.html', list_items=self.get_items_list(), title="Busca")
 
     def post(self):
-        return render_template('produtos.html', list_items=self.get_items_list_key(request.form['search-key']), title="Search")
+        return render_template('produtos.html', list_items=self.get_items_list_key(request.form['search-key']), title="Busca")
 
     #@app.route('/search/<keyword>')
     #def search_key(self, keyword):

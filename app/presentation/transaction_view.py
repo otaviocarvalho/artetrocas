@@ -93,7 +93,7 @@ class TransactionView(FlaskView):
         flash("Solicitacao de Troca criada com Sucesso!")
 
         #return render_template('transactions.html', list_transactions=transaction_view.get_transactions_list_key(), title="Transaction")
-        return render_template('transactions.html', list_transactions=transaction_view.get_transactions_list(), title="Transaction")
+        return render_template('transactions.html', list_transactions=transaction_view.get_transactions_list(), title="Transacao")
 
     #@app.route("/transaction/new/exchange", methods=['GET', 'POST'])
     def new_transaction_users(self):
@@ -127,7 +127,7 @@ class TransactionView(FlaskView):
             print create_transaction_id
             session['active_transaction'] = create_transaction_id
 
-        return render_template('transactions_create_user_items.html', list_items=self.get_user_items(session['user']), title="New Transaction - User Items")
+        return render_template('transactions_create_user_items.html', list_items=self.get_user_items(session['user']), title="Nova Transacao - Itens do Usuario")
 
     #@app.route('/transaction')
     def index(self):
@@ -143,7 +143,7 @@ class TransactionView(FlaskView):
         #if 'active_transaction' in session:
             #self.active_transaction = session['active_transaction']
 
-        return render_template('transactions.html', list_transactions=self.get_transactions_list_key(session['user']), title="Transaction")
+        return render_template('transactions.html', list_transactions=self.get_transactions_list_key(session['user']), title="Transacao")
 
 
 TransactionView.register(app)

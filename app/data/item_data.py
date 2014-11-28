@@ -10,6 +10,14 @@ class ItemData(object):
         def __init__(self):
             self.items = items
 
+            #test = Item(4, 'test', 'teste', None, None)
+            #teste commit items
+            #self.items = test.commit(self.items)
+            #print self.items
+
+        def get_item(self, id):
+            return self.items.get(id)
+
         def get_items(self):
             return self.items
 
@@ -34,9 +42,23 @@ class ItemData(object):
 
             return items_list
 
+    # Gerencia do Singleton em Python
     instance = None
     def __new__(cls):
         if not ItemData.instance:
             ItemData.instance = ItemData.__ItemData()
         return ItemData.instance
 
+class Item(object):
+    def __init__(self, item_id, title, school, quantity, user_id):
+        self.item_id = item_id
+        self.title = title
+        self.school = school
+        self.quantity = quantity
+        self.user_id = user_id
+
+    def commit(self, list_items):
+        dict_items = { 'title': self.title, 'school': self.school, 'quantity': self.quantity, 'user_id': self.user_id }
+        #print dict_items
+        list_items[self.item_id] = dict_items
+        return list_items
