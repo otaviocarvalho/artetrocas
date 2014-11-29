@@ -23,3 +23,9 @@ class ItemBusiness(object):
 
     def items_list_key(self, keyword):
         return self.item_data.get_item_key(keyword)
+
+    def create_item(self, user_id):
+        return self.item_data.create_item_user(user_id)
+
+    def insert_item(self, item):
+        return self.item_data.insert_item(item)
