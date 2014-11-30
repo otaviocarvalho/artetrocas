@@ -1,8 +1,8 @@
 import random
 
 transactions = {
-    '12345': {'user_from': 'test', 'user_to': 'otavio', 'status': 'finished', 'list_items_from': [0, 1], 'list_items_from_qtd': [1, 1],
-                                                                                'list_items_to': [2, 3], 'list_items_to_qtd': [1, 1] },
+    '12345': {'user_from': 'test', 'user_to': 'otavio', 'status': 'finished', 'list_items_from': ['0', '1'], 'list_items_from_qtd': ['1', '1'],
+                                                                                'list_items_to': ['2', '3'], 'list_items_to_qtd': ['1', '1'] },
 }
 
 class TransactionData(object):
@@ -18,19 +18,17 @@ class TransactionData(object):
 
         def get_transaction_key(self, keyword):
             transactions_list = {}
-            print 'here'
-            print self.transactions
             for key,value in self.transactions.iteritems():
-                # Show only active transactions
+                # Mostra apenas as transacoes ativas
                 if value['status'] != 'empty':
-                    # Search by names
+                    # Procura por nomes
                     if (value['user_from'].lower() == keyword.lower()):
                         transactions_list[key] = value
 
             return transactions_list
 
         def create_transaction(self, user_from):
-            # Find a key that isn't in the dictionary yet
+            # Procura uma chave que ainda nao esteja no dicionario
             new_key = random.randrange(10000, 99999)
             while new_key in self.transactions.keys():
                 new_key = random.randrange(10000, 99999)
@@ -48,9 +46,9 @@ class TransactionData(object):
             else:
                 return False
 
-        def set_transaction_item_to(self, transaction_id, user_id, item_id, item_qtd):
+        def set_transaction_item_to(self, transaction_id, user, item_id, item_qtd):
             if transaction_id in self.transactions.keys():
-                self.transactions[transaction_id]['user_from'] = user_id
+                self.transactions[transaction_id]['user_to'] = user
                 self.transactions[transaction_id]['list_items_to'].extend(item_id)
                 self.transactions[transaction_id]['list_items_to_qtd'].extend(item_qtd)
                 return True
@@ -61,6 +59,10 @@ class TransactionData(object):
             if not transaction.keys()[0] in self.transactions:
                 for key,value in transaction.iteritems():
                     self.transactions[key] = value
+
+        def commit_transaction(self, transaction_id):
+            if transaction_id in self.transactions.keys():
+                self.transactions[transaction_id]['status'] = 'open'
 
     instance = None
     def __new__(cls):

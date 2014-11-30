@@ -14,20 +14,23 @@ class TransactionBusiness(object):
         return self.transaction_data.get_transaction_key(keyword)
 
     def create_transaction(self, user_id):
-        return self.transaction_data.create_transaction(user_id)
+        user = self.user_data.get_user_id(int(user_id))
+        return self.transaction_data.create_transaction(user[user.keys()[0]]['name'])
 
+    # Atualiza os itens que serao enviados na troca
     def set_transaction_item_from(self, transaction_id, item_id, item_qtd):
-        # Verify items before insert
         return self.transaction_data.set_transaction_item_from(transaction_id, item_id, item_qtd)
 
+    # Atualiza os itens que serao recebidos na troca
     def set_transaction_item_to(self, transaction_id, user_id, item_id, item_qtd):
-        # Verify items before insert
-        # Get username by user_id
-        user_name = self.user_data.get_user_id(user_id)
-        return self.transaction_data.set_transaction_item_to(transaction_id, user_name, item_id, item_qtd)
+        user = self.user_data.get_user_id(int(user_id))
+        return self.transaction_data.set_transaction_item_to(transaction_id, user[user.keys()[0]]['name'], item_id, item_qtd)
 
     def get_transaction_by_id(self, transaction_id):
         return self.transaction_data.get_transaction_by_id(transaction_id)
 
     def add_transaction(self, transaction):
         return self.transaction_data.add_transaction(transaction)
+
+    def commit_transaction(self, transaction_id):
+        return self.transaction_data.commit_transaction(transaction_id)

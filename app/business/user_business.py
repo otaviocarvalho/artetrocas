@@ -18,6 +18,9 @@ class UserBusiness(object):
     def get_user_items(self, user):
         return self.item_data.get_items_user(user)
 
+    def get_user_id(self, user_id):
+        return self.user_data.get_user_id(user_id)
+
     def get_users_exchange_items(self, ids, qtds, my_user_id):
         # Get users based on the items they have
         # self.item_data
