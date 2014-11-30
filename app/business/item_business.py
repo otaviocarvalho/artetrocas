@@ -7,10 +7,9 @@ class ItemBusiness(object):
 
     def get_item(self, item_id):
         item = self.item_data.get_item(item_id)
+        print self.item_data.get_items()[int(item_id)]
+        print item
 
-        #print "user_id"
-        #print item["user_id"]
-        #print self.user_data.get_user_id(item["user_id"]).get(item["user_id"])
         # Add item id and owner to query answer
         if item:
             item["id"] = item_id
@@ -29,3 +28,6 @@ class ItemBusiness(object):
 
     def insert_item(self, item):
         return self.item_data.insert_item(item)
+
+    def insert_new_item(self, item):
+        return self.item_data.insert_new_item(item)

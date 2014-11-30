@@ -20,5 +20,6 @@ from app.presentation import transaction_view
 from app.presentation import transaction_select_view
 from app.presentation import transaction_exchange_view
 from app.presentation import transaction_create_view
+from app.presentation import transaction_accept_view
 
 from app.presentation import profile_view

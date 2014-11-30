@@ -1,18 +1,17 @@
 from app import app
-#from flask import Flask, render_template
-from flask import render_template
+from flask import render_template, session
 from flask.ext.classy import FlaskView
-#import datetime
 
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-#print sys.path
 
-#from app.business.business import Business
 from app.business.search_business import SearchBusiness
 
-#class Presentation(object):
+# Parametros de sessao para simular o login
+user = 'test'
+user_id = 1
+
 class HomeView(FlaskView):
     route_base = '/'
 
@@ -23,10 +22,11 @@ class HomeView(FlaskView):
     def get_items_list(self):
         return self.search_business_logic.items_list();
 
-    #@app.route("/")
     def index(self):
-        #ui = Presentation()
-        #return render_template('produtos.html', list_items=ui.get_items_list(), title="Index")
+        # Cria uma sessao para simular o login
+        session['user'] = user
+        session['user_id'] = user_id
+
         return render_template('produtos.html', list_items=self.get_items_list(), title="Index")
 
 HomeView.register(app)

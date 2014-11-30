@@ -3,6 +3,15 @@ import random
 transactions = {
     '12345': {'user_from': 'test', 'user_to': 'otavio', 'status': 'finished', 'list_items_from': ['0', '1'], 'list_items_from_qtd': ['1', '1'],
                                                                                 'list_items_to': ['2', '3'], 'list_items_to_qtd': ['1', '1'] },
+
+    '12346': {'user_from': 'test', 'user_to': 'otavio', 'status': 'open', 'list_items_from': ['0', '1'], 'list_items_from_qtd': ['1', '1'],
+                                                                                'list_items_to': ['2', '3'], 'list_items_to_qtd': ['1', '1'] },
+
+    '12347': {'user_from': 'test', 'user_to': 'otavio', 'status': 'empty', 'list_items_from': ['0', '1'], 'list_items_from_qtd': ['1', '1'],
+                                                                                'list_items_to': ['2', '3'], 'list_items_to_qtd': ['1', '1'] },
+
+    '12348': {'user_from': 'otavio', 'user_to': 'test', 'status': 'open', 'list_items_from': ['2'], 'list_items_from_qtd': ['1'],
+                                                                                'list_items_to': ['1'], 'list_items_to_qtd': ['1'] },
 }
 
 class TransactionData(object):
@@ -23,6 +32,17 @@ class TransactionData(object):
                 if value['status'] != 'empty':
                     # Procura por nomes
                     if (value['user_from'].lower() == keyword.lower()):
+                        transactions_list[key] = value
+
+            return transactions_list
+
+        def get_transaction_user_status(self, user, status):
+            transactions_list = {}
+            for key,value in self.transactions.iteritems():
+                # Mostra apenas as transacoes aguardando
+                if value['status'] == status:
+                    # Procura por nomes
+                    if (value['user_to'].lower() == user.lower()):
                         transactions_list[key] = value
 
             return transactions_list
@@ -63,6 +83,14 @@ class TransactionData(object):
         def commit_transaction(self, transaction_id):
             if transaction_id in self.transactions.keys():
                 self.transactions[transaction_id]['status'] = 'open'
+
+        def finish_transaction(self, transaction_id):
+            # Muda o status da transacao
+            self.transactions[transaction_id]['status'] = 'finished'
+
+        def cancel_transaction(self, transaction_id):
+            if transaction_id in self.transactions.keys():
+                del self.transactions[transaction_id]
 
     instance = None
     def __new__(cls):

@@ -1,3 +1,5 @@
+import random
+
 list_items = {
     0: { 'title': 'Mondrian', 'school': 'Neoplasticismo', 'quantity': 10, 'user_id': 1 },
     1: { 'title': 'Picasso', 'school': 'Cubismo', 'quantity': 100, 'user_id': 1 },
@@ -10,13 +12,16 @@ class ItemData(object):
         def __init__(self):
             self.list_items = list_items
 
-            #test = Item(4, 'test', 'teste', None, None)
-            #teste commit items
-            #self.items = test.commit(self.items)
-            #print self.items
+        def set_item(self, key, item):
+            if key in list_items.keys():
+                list_items[key] = item
 
-        def get_item(self, id):
-            return self.list_items.get(id)
+        def set_item_quantity(self, key, quantity):
+            if key in list_items.keys():
+                list_items[key]['quantity'] = quantity
+
+        def get_item(self, item_id):
+            return self.list_items.get(item_id)
 
         def get_items(self):
             return self.list_items
@@ -25,7 +30,6 @@ class ItemData(object):
             items_list_aux = {}
             for key,value in self.list_items.iteritems():
                 # Search by names
-                #if (value['title'].lower() == keyword.lower()):
                 if value['title'].lower().find(keyword.lower()) != -1:
                     items_list_aux[key] = value
                 # Search by school
@@ -61,6 +65,14 @@ class ItemData(object):
         def insert_item(self, item):
             for key in item.keys():
                 self.list_items[key] = item[key]
+
+        def insert_new_item(self, item):
+            # Procura uma chave que ainda nao esteja no dicionario
+            new_key = random.randrange(10000, 99999)
+            while new_key in self.list_items.keys():
+                new_key = random.randrange(10000, 99999)
+
+            self.list_items[new_key] = item
 
     # Gerencia do Singleton em Python
     instance = None

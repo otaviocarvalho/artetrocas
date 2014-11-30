@@ -10,12 +10,6 @@ from app.business.transaction_business import TransactionBusiness
 from app.business.user_business import UserBusiness
 from app.business.item_business import ItemBusiness
 
-active_transaction = {72580: {'status': 'finished', 'list_items_to_qtd': [], 'list_items_from_qtd': [], 'list_items_from': [], 'user_to': None, 'user_from': None, 'list_items_to': []}}
-active_transaction_key = active_transaction.keys()[0]
-
-form_ids = []
-form_qtd = []
-
 class TransactionExchangeView(FlaskView):
     route_base = '/transaction/exchange'
 

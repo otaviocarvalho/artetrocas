@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block page %}{{title}}{% endblock %}
+{% block heading %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+        <div class="row thumbnails">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <div class="alert alert-success" role="alert">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+
+                    <div class= "col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h3>Solicitações</h3></div>
+
+                                {% if not list_transactions %}
+                                <div style="margin: 10px;"><p><h3>Nenhuma Solicitação de Troca existente</h3></p></div>
+                                {% else %}
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td><strong>#</strong></td>
+                                            <td><strong>Solicitante</strong></td>
+                                            <td><strong>Solicitado</strong></td>
+                                            <td><strong>Status</strong></td>
+                                            <td><strong>Ítens Solicitante</strong></td>
+                                            <td><strong>Ítens Solicitado</strong></td>
+                                            <td><strong>Qtds. Solicitante</strong></td>
+                                            <td><strong>Qtds. Solicitado</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for key,value in list_transactions.iteritems() %}
+                                        <tr>
+                                            <td>{{key}}</td>
+                                            <td>{{value.user_from}}</td>
+                                            <td>{{value.user_to}}</td>
+                                            <td>{{value.status}}</td>
+                                            <td>{{value.list_items_from}}</td>
+                                            <td>{{value.list_items_to}}</td>
+                                            <td>{{value.list_items_from_qtd}}</td>
+                                            <td>{{value.list_items_to_qtd}}</td>
+                                            <td><a href="javascript:;" onclick="document.getElementById('form-yes-{{key}}').submit();" class="btn glyphicon glyphicon-ok"></a></td>
+                                            <form id="form-yes-{{key}}" action="/transaction/accept/" method="post">
+                                                <input type="hidden" name="transaction_id" class="form-control" value="{{key}}">
+                                                <input type="hidden" name="type" class="form-control" value="yes">
+                                            </form>
+                                            <td><a href="javascript:;" onclick="document.getElementById('form-no-{{key}}').submit();" class="btn glyphicon glyphicon-remove"></a></td>
+                                            <form id="form-no-{{key}}" action="/transaction/accept/" method="post">
+                                                <input type="hidden" name="transaction_id" class="form-control" value="{{key}}">
+                                                <input type="hidden" name="type" class="form-control" value="no">
+                                            </form>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% endif %}
+                        </div>
+                    </div>
+        </div>
+{% endblock %}

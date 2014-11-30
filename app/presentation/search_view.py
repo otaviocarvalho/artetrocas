@@ -26,9 +26,5 @@ class SearchView(FlaskView):
     def post(self):
         return render_template('produtos.html', list_items=self.get_items_list_key(request.form['search-key']), title="Busca")
 
-    #@app.route('/search/<keyword>')
-    #def search_key(self, keyword):
-        #return render_template('produtos.html', list_items=self.get_items_list_key(keyword), title=keyword)
-
 SearchView.register(app)
 
