@@ -39,6 +39,9 @@ class TransactionCreateView(FlaskView):
                 if transaction_return == False:
                     transaction_error = True
 
+        # Commita transacao passando para o status 'open', aguardando aprovacao
+        self.transaction_business_logic.set_status_transaction(session['active_transaction_key'], 'open')
+
         # Finaliza edicao da transacao pelo proponente
         session.pop('active_transaction', None)
         session.pop('active_transaction_key', None)

@@ -37,8 +37,8 @@ class TransactionBusiness(object):
     def add_transaction(self, transaction):
         return self.transaction_data.add_transaction(transaction)
 
-    def commit_transaction(self, transaction_id):
-        return self.transaction_data.commit_transaction(transaction_id)
+    def set_status_transaction(self, transaction_id, status):
+        return self.transaction_data.commit_transaction(transaction_id, status)
 
     def cancel_transaction(self, transaction_id):
         return self.transaction_data.cancel_transaction(transaction_id)

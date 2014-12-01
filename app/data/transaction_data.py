@@ -80,9 +80,9 @@ class TransactionData(object):
                 for key,value in transaction.iteritems():
                     self.transactions[key] = value
 
-        def commit_transaction(self, transaction_id):
+        def set_status_transaction(self, transaction_id, status):
             if transaction_id in self.transactions.keys():
-                self.transactions[transaction_id]['status'] = 'open'
+                self.transactions[transaction_id]['status'] = status
 
         def finish_transaction(self, transaction_id):
             # Muda o status da transacao

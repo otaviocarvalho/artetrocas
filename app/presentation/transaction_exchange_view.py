@@ -30,9 +30,6 @@ class TransactionExchangeView(FlaskView):
             for i in range(0,len(form_ids)):
                 self.transaction_business_logic.set_transaction_item_from(session['active_transaction_key'], form_ids[i], form_qtd[i])
 
-        # Commita transacao passando para o status 'open', aguardando aprovacao
-        self.transaction_business_logic.commit_transaction(session['active_transaction_key'])
-
         return render_template('transactions_create_exchange_users.html', list_users=self.user_business_logic.get_users_exchange_items(form_ids, form_qtd, session['user_id']), title="New Transaction - Select User")
 
 TransactionExchangeView.register(app)
