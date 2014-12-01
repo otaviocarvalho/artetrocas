@@ -7,10 +7,8 @@ class ItemBusiness(object):
 
     def get_item(self, item_id):
         item = self.item_data.get_item(item_id)
-        print self.item_data.get_items()[int(item_id)]
-        print item
 
-        # Add item id and owner to query answer
+        # Adiciona o id do item e o proprietario a resposta
         if item:
             item["id"] = item_id
             item["owner"] = (self.user_data.get_user_id(item["user_id"])).get(item["user_id"]).get("full_name")

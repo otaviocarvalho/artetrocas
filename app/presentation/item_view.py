@@ -21,7 +21,16 @@ class ItemView(FlaskView):
         return render_template('item_insert.html', title="Novo Item")
 
     def post(self):
-        self.item = { 'title': request.form['title'], 'school': request.form['school'], 'quantity': request.form['quantity'], 'user_id': session['user_id'] }
+        self.item = {
+                        'title': request.form['title'],
+                        'author': request.form['author'],
+                        'description': request.form['description'],
+                        'school': request.form['school'],
+                        'type': request.form['type'],
+                        'quantity': request.form['quantity'],
+                        'user_id': session['user_id']
+                    }
+
         self.item_business_logic.insert_new_item(self.item)
 
         flash("Novo Item Inserido com Sucesso!")

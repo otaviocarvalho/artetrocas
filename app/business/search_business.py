@@ -2,7 +2,6 @@
 from app.data.item_data import ItemData
 
 class SearchBusiness(object):
-    #data = Data()
     item_data = ItemData()
 
     def items_list(self):

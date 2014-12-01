@@ -2,11 +2,11 @@ import random
 
 list_items = {
     0: {
-        'title': 'Mondrian',
+        'title': 'Boogie-Woogie',
         'author': 'Mondrian',
-        'description': 'Mondrian',
+        'description': 'Boogie-Woogie e um quadro de Piet Mondrian, completado em 1943, pouco depois de este se ter mudado para Nova Iorque, em 1940.',
         'school': 'Neoplasticismo',
-        'type': 'oil paint',
+        'type': 'Pintura a Oleo',
         'quantity': 10,
         'user_id': 1
     },
@@ -15,7 +15,7 @@ list_items = {
         'author': 'Picasso',
         'description': 'Picasso',
         'school': 'Cubismo',
-        'type': 'oil paint',
+        'type': 'Pintura a Oleo',
         'quantity': 100,
         'user_id': 1
     },
@@ -24,7 +24,7 @@ list_items = {
         'author': 'Renoir',
         'description': 'Renoir',
         'school': 'Impressionismo',
-        'type': 'oil paint',
+        'type': 'Pintura a Oleo',
         'quantity': 10,
         'user_id': 2
     },
@@ -33,7 +33,7 @@ list_items = {
         'author': 'Monet',
         'description': 'Monet',
         'school': 'Impressionismo',
-        'type': 'oil paint',
+        'type': 'Pintura a Oleo',
         'quantity': 20,
         'user_id': 2
     }
@@ -120,17 +120,3 @@ class ItemData(object):
         if not ItemData.instance:
             ItemData.instance = ItemData.__ItemData()
         return ItemData.instance
-
-class Item(object):
-    def __init__(self, item_id, title, school, quantity, user_id):
-        self.item_id = item_id
-        self.title = title
-        self.school = school
-        self.quantity = quantity
-        self.user_id = user_id
-
-    def commit(self, list_items):
-        dict_items = { 'title': self.title, 'school': self.school, 'quantity': self.quantity, 'user_id': self.user_id }
-        #print dict_items
-        list_items[self.item_id] = dict_items
-        return list_items

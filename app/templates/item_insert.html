@@ -23,10 +23,17 @@
                             {% endif %}
                         {% endwith %}
                         <form id="form-exchange" action="/item/" method="post">
+                            <div class="well">
+                                <div class="input-group" style="width: 100%;">
+                                    <input type="text" name="description" class="form-control" placeholder="Descricao">
+                                </div>
+                            </div>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <td><strong>Título</strong></td>
+                                        <td><strong>Autor</strong></td>
+                                        <td><strong>Tipo</strong></td>
                                         <td><strong>Escola</strong></td>
                                         <td><strong>Quantidade</strong></td>
                                     </tr>
@@ -35,6 +42,16 @@
                                     <td>
                                         <div class="input-group">
                                             <input type="text" name="title" class="form-control" placeholder="Título">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" name="author" class="form-control" placeholder="Autor">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" name="type" class="form-control" placeholder="Tipo">
                                         </div>
                                     </td>
                                     <td>
