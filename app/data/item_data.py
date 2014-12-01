@@ -1,10 +1,42 @@
 import random
 
 list_items = {
-    0: { 'title': 'Mondrian', 'school': 'Neoplasticismo', 'quantity': 10, 'user_id': 1 },
-    1: { 'title': 'Picasso', 'school': 'Cubismo', 'quantity': 100, 'user_id': 1 },
-    2: { 'title': 'Renoir', 'school': 'Impressionismo', 'quantity': 10, 'user_id': 2 },
-    3: { 'title': 'Monet', 'school': 'Impressionismo', 'quantity': 20, 'user_id': 2 }
+    0: {
+        'title': 'Mondrian',
+        'author': 'Mondrian',
+        'description': 'Mondrian',
+        'school': 'Neoplasticismo',
+        'type': 'oil paint',
+        'quantity': 10,
+        'user_id': 1
+    },
+    1: {
+        'title': 'Picasso',
+        'author': 'Picasso',
+        'description': 'Picasso',
+        'school': 'Cubismo',
+        'type': 'oil paint',
+        'quantity': 100,
+        'user_id': 1
+    },
+    2: {
+        'title': 'Renoir',
+        'author': 'Renoir',
+        'description': 'Renoir',
+        'school': 'Impressionismo',
+        'type': 'oil paint',
+        'quantity': 10,
+        'user_id': 2
+    },
+    3: {
+        'title': 'Monet',
+        'author': 'Monet',
+        'description': 'Monet',
+        'school': 'Impressionismo',
+        'type': 'oil paint',
+        'quantity': 20,
+        'user_id': 2
+    }
 }
 
 class ItemData(object):
@@ -48,7 +80,15 @@ class ItemData(object):
 
         def set_item_user(self, key, user_id):
             if not key in self.list_items:
-                self.list_items[key] = { 'title': 'empty', 'school': 'empty', 'quantity': 0, 'user_id': user_id }
+                self.list_items[key] = {
+                                        'title': 'empty',
+                                        'author': 'empty',
+                                        'description': 'empty',
+                                        'school': 'empty',
+                                        'type': 'empty',
+                                        'quantity': 0,
+                                        'user_id': user_id
+                                       }
                 return { key: self.list_items[key] }
             else:
                 return None

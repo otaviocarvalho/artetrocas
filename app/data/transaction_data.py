@@ -1,17 +1,41 @@
 import random
 
 transactions = {
-    '12345': {'user_from': 'test', 'user_to': 'otavio', 'status': 'finished', 'list_items_from': ['0', '1'], 'list_items_from_qtd': ['1', '1'],
-                                                                                'list_items_to': ['2', '3'], 'list_items_to_qtd': ['1', '1'] },
-
-    '12346': {'user_from': 'test', 'user_to': 'otavio', 'status': 'open', 'list_items_from': ['0', '1'], 'list_items_from_qtd': ['1', '1'],
-                                                                                'list_items_to': ['2', '3'], 'list_items_to_qtd': ['1', '1'] },
-
-    '12347': {'user_from': 'test', 'user_to': 'otavio', 'status': 'empty', 'list_items_from': ['0', '1'], 'list_items_from_qtd': ['1', '1'],
-                                                                                'list_items_to': ['2', '3'], 'list_items_to_qtd': ['1', '1'] },
-
-    '12348': {'user_from': 'otavio', 'user_to': 'test', 'status': 'open', 'list_items_from': ['2'], 'list_items_from_qtd': ['1'],
-                                                                                'list_items_to': ['1'], 'list_items_to_qtd': ['1'] },
+    '12345': {
+                'user_from': 'test',
+                'user_to': 'otavio', 'status': 'finished',
+                'list_items_from': ['0', '1'],
+                'list_items_from_qtd': ['1', '1'],
+                'list_items_to': ['2', '3'],
+                'list_items_to_qtd': ['1', '1']
+            },
+    '12346': {
+                'user_from': 'test',
+                'user_to': 'otavio',
+                'status': 'open',
+                'list_items_from': ['0', '1'],
+                'list_items_from_qtd': ['1', '1'],
+                'list_items_to': ['2', '3'],
+                'list_items_to_qtd': ['1', '1']
+            },
+    '12347': {
+            'user_from': 'test',
+            'user_to': 'otavio',
+            'status': 'empty',
+            'list_items_from': ['0', '1'],
+            'list_items_from_qtd': ['1', '1'],
+            'list_items_to': ['2', '3'],
+            'list_items_to_qtd': ['1', '1']
+            },
+    '12348': {
+            'user_from': 'otavio',
+            'user_to': 'test',
+            'status': 'open',
+            'list_items_from': ['2'],
+            'list_items_from_qtd': ['1'],
+            'list_items_to': ['1'],
+            'list_items_to_qtd': ['1']
+            },
 }
 
 class TransactionData(object):
