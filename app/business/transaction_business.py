@@ -74,6 +74,5 @@ class TransactionBusiness(object):
             item_insert['quantity'] = int(transaction['list_items_from_qtd'][index])
             self.item_data.insert_new_item(item_insert)
 
-
         return self.transaction_data.finish_transaction(transaction_id)
 
