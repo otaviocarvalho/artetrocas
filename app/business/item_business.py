@@ -9,11 +9,10 @@ class ItemBusiness(object):
         item = self.item_data.get_item(item_id)
 
         # Adiciona o id do item e o proprietario a resposta
-        if item:
-            item["id"] = item_id
-            item["owner"] = (self.user_data.get_user_id(item["user_id"])).get(item["user_id"]).get("full_name")
+        if item is not None:
+            item.owner = self.user_data.get_user_id(item.user_id).get(item.user_id).get("full_name")
 
-        return self.item_data.get_item(item_id)
+        return item
 
     def items_list(self):
         return self.item_data.get_items()
