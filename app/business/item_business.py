@@ -28,3 +28,6 @@ class ItemBusiness(object):
 
     def insert_new_item(self, item):
         return self.item_data.insert_new_item(item)
+
+    def convert_item_to_dict(self, item):
+        return self.item_data.convert_item_to_dict(item)

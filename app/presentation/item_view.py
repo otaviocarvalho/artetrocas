@@ -22,25 +22,17 @@ class ItemView(FlaskView):
 
     def post(self):
         # Cria um novo item vazio
-        self.item = self.item_business_logic.create_item()
-        self.item.title = request.form['title']
-        self.item.author = request.form['author']
-        self.item.description = request.form['description']
-        self.item.school = request.form['school']
-        self.item.type = request.form['type']
-        self.item.quantity = request.form['quantity']
-        self.item.user_id = request.form['user_id']
-        #self.item = {
-                        #'title': request.form['title'],
-                        #'author': request.form['author'],
-                        #'description': request.form['description'],
-                        #'school': request.form['school'],
-                        #'type': request.form['type'],
-                        #'quantity': request.form['quantity'],
-                        #'user_id': session['user_id']
-        #            }
+        self.item = self.item_business_logic.create_item(session['user_id'])
+        self.item.title = request.form['title'].encode('utf-8')
+        self.item.author = request.form['author'].encode('utf-8')
+        self.item.description = request.form['description'].encode('utf-8')
+        self.item.school = request.form['school'].encode('utf-8')
+        self.item.type = request.form['type'].encode('utf-8')
+        self.item.quantity = int(request.form['quantity'].encode('utf-8'))
+        self.item.user_id = session['user_id']
 
-        # Insere novo item no banco de dados
+        #print self.item_business_logic.convert_item_to_dict(self.item)
+        ## Insere novo item no banco de dados
         insert_result = self.item_business_logic.insert_new_item(self.item)
 
         if insert_result is True:

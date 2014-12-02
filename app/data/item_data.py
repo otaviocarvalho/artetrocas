@@ -44,56 +44,90 @@ class ItemData(object):
         def __init__(self):
             self.list_items = list_items
 
-        def set_item(self, key, item):
-            if key in list_items.keys():
-                list_items[key] = item
+        def convert_item_to_dict(self, item):
+            # Cria um novo dicionario
+            new_dict = {
+                            'title': item.title,
+                            'author': item.author,
+                            'description': item.description,
+                            'school': item.school,
+                            'type': item.type,
+                            'quantity': item.quantity,
+                            'user_id': item.user_id
+                       }
 
-        def set_item_quantity(self, key, quantity):
-            if key in list_items.keys():
-                list_items[key]['quantity'] = quantity
+            return { item.key : new_dict }
 
-        def convert_dict_to_item(self, item_key, item_dict):
-            item = Item(item_key)
+        def convert_dict_to_item(self, item_dict, item_key=None):
+            if item_key is None:
+                item = Item()
+                item_key = item_dict.keys()[0]
+                item_dict = item_dict[item_key]
+            else:
+                item = Item(item_key)
 
             item.key = item_key
             item.title = item_dict['title']
             item.author = item_dict['author']
             item.description = item_dict['description']
             item.school = item_dict['school']
-            item.type_item = item_dict['type']
+            item.type = item_dict['type']
             item.quantity = item_dict['quantity']
             item.user_id = item_dict['user_id']
 
             return item
 
         def get_item(self, item_id):
-            print self.list_items[item_id]
-            item = self.convert_dict_to_item(item_id, self.list_items[item_id])
+            #print self.list_items[item_id]
+            item = self.convert_dict_to_item(self.list_items[item_id], item_id)
             #return self.list_items.get(item_id)
             return item
 
         def get_items(self):
-            return self.list_items
+            # Montar lista de objetos
+            list_aux = []
+            #print self.list_items
+            for item_key in self.list_items.keys():
+                #print self.list_items[item_key]
+                list_aux.append(self.convert_dict_to_item(self.list_items[item_key], item_key))
+
+            #return self.list_items
+            return list_aux
 
         def get_item_key(self, keyword):
-            items_list_aux = {}
-            for key,value in self.list_items.iteritems():
-                # Search by names
-                if value['title'].lower().find(keyword.lower()) != -1:
-                    items_list_aux[key] = value
-                # Search by school
-                elif value['school'].lower().find(keyword.lower()) != -1:
-                    items_list_aux[key] = value
+            items_list = self.get_items()
+            items_list_aux = []
+            for item in items_list:
+                print item.title
+                print item.type
+                # Procurar por nome
+                if item.title.lower().find(keyword.lower()) != -1:
+                    items_list_aux.append(item)
+                # Procurar por autor
+                if item.author.lower().find(keyword.lower()) != -1:
+                    items_list_aux.append(item)
+                # Procurar por tipo
+                if item.type.lower().find(keyword.lower()) != -1:
+                    items_list_aux.append(item)
+
+            #for key,value in self.list_items.iteritems():
+                ## Search by names
+                #if value['title'].lower().find(keyword.lower()) != -1:
+                    #items_list_aux[key] = value
+                ## Search by school
+                #elif value['school'].lower().find(keyword.lower()) != -1:
+                    #items_list_aux[key] = value
 
             return items_list_aux
 
         def get_items_user(self, user_id):
-            items_list_aux = {}
-            for key,value in self.list_items.iteritems():
-                if value['user_id'] == user_id:
-                    items_list_aux[key] = value
+            # Montar lista de objetos
+            list_aux = []
+            for item_key in self.list_items.keys():
+                if item_key == user_id:
+                    list_aux.append(self.convert_dict_to_item(self.list_items[item_key], item_key))
 
-            return items_list_aux
+            return list_aux
 
         #def set_item_user(self, key, user_id):
             #if not key in self.list_items:
@@ -131,32 +165,21 @@ class ItemData(object):
 
         def insert_item(self, item):
             item_dict = self.convert_item_to_dict(item)
-            self.list_items[item.key] = item_dict
+            self.list_items[item.key] = item_dict[item.key]
 
             return True
 
         def insert_new_item(self, item):
-            key = generate_key()
+            item.key = self.generate_key()
+            print item.key
             item_dict = self.convert_item_to_dict(item)
-            self.list_items[item.key] = item_dict
+            print item_dict
+            self.list_items[item.key] = item_dict[item.key]
+            print self.list_items
             #for key in item.keys():
                 #self.list_items[key] = item[key]
 
             return True
-
-        def convert_item_to_dict(self, item):
-            # Cria um novo dicionario
-            new_dict = {
-                            'title': item.title,
-                            'author': item.author,
-                            'description': item.description,
-                            'school': item.school,
-                            'type': item.type,
-                            'quantity': item.quantity,
-                            'user_id': item.user_id
-                       }
-
-            return { item.key : new_dict }
 
     # Gerencia do Singleton em Python
     instance = None
@@ -166,7 +189,7 @@ class ItemData(object):
         return ItemData.instance
 
 class Item(object):
-    def __init__(self, key=-1, title="", author=None, description=None, school=None, type_item=None, quantity=-1, user_id=-1):
+    def __init__(self, key=-1, title="", author="", description="", school="", type_item="", quantity=-1, user_id=-1):
         self.key = key
         self.title = title
         self.author = author
