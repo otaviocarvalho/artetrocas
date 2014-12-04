@@ -10,7 +10,8 @@ class ItemBusiness(object):
 
         # Adiciona o id do item e o proprietario a resposta
         if item is not None:
-            item.owner = self.user_data.get_user_id(item.user_id).get(item.user_id).get("full_name")
+            user = self.user_data.get_user_id(item.user_id)
+            item.owner = user.full_name
 
         return item
 
@@ -28,6 +29,3 @@ class ItemBusiness(object):
 
     def insert_new_item(self, item):
         return self.item_data.insert_new_item(item)
-
-    def convert_item_to_dict(self, item):
-        return self.item_data.convert_item_to_dict(item)

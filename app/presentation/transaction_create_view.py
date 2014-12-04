@@ -15,14 +15,6 @@ class TransactionCreateView(FlaskView):
 
     def __init__(self):
         self.transaction_business_logic = TransactionBusiness()
-        self.user_business_logic = UserBusiness()
-        self.item_business_logic = ItemBusiness()
-
-    def get_user_by_id(self, user_id):
-        users_list = self.user_business_logic.users_list()
-        for k,v in users_list.iteritems():
-            if str(k) == user_id:
-                return v['name']
 
     def post(self):
         # Recebe os itens pelos quais o usuario deseja trocar os seus

@@ -26,13 +26,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for key,value in list_users.iteritems() %}
+                                        {% for user in list_users %}
                                         <tr>
-                                            <td>{{key}}</td>
-                                            <td>{{value.name}}</td>
-                                            <td>{{value.full_name}}</td>
-                                            <td>{{value.products}}</td>
-                                            <td>{{value.quantities}}</td>
+                                            <td>{{user.key}}</td>
+                                            <td>{{user.name}}</td>
+                                            <td>{{user.full_name}}</td>
+                                            <td>{{user.products}}</td>
+                                            <td>{{user.quantities}}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

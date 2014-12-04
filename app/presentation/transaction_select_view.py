@@ -16,14 +16,16 @@ class TransactionSelectView(FlaskView):
     def __init__(self):
         self.transaction_business_logic = TransactionBusiness()
         self.user_business_logic = UserBusiness()
-        self.item_business_logic = ItemBusiness()
 
     def index(self):
         # Cria uma nova transacao se nao existir uma ativa ainda
         if not 'active_transaction' in session.keys():
-            create_transaction_id = self.transaction_business_logic.create_transaction(session['user_id'])
-            session['active_transaction'] = create_transaction_id
-            session['active_transaction_key'] = create_transaction_id.keys()[0]
+            transaction = self.transaction_business_logic.create_transaction(session['user_id'])
+            #session['active_transaction'] = transaction.key
+            session['active_transaction_key'] = transaction.key
+            #create_transaction_id = self.transaction_business_logic.create_transaction(session['user_id'])
+            #session['active_transaction'] = create_transaction_id
+            #session['active_transaction_key'] = create_transaction_id.keys()[0]
 
         return render_template('transactions_create_user_items.html', list_items=self.user_business_logic.get_user_items(session['user_id']), title="Nova Transacao - Itens do Usuario")
 

@@ -14,17 +14,11 @@ class SearchView(FlaskView):
     def __init__(self):
         self.search_business_logic = SearchBusiness()
 
-    def get_items_list(self):
-        return self.search_business_logic.items_list();
-
-    def get_items_list_key(self,keyword):
-        return self.search_business_logic.items_list_key(keyword);
-
     def index(self):
-        return render_template('produtos.html', list_items=self.get_items_list(), title="Busca")
+        return render_template('produtos.html', list_items=self.search_business_logic.items_list(), title="Busca")
 
     def post(self):
-        return render_template('produtos.html', list_items=self.get_items_list_key(request.form['search-key']), title="Busca")
+        return render_template('produtos.html', list_items=self.search_business_logic.items_list_key(request.form['search-key']), title="Busca")
 
 SearchView.register(app)
 

@@ -15,8 +15,6 @@ class TransactionAcceptView(FlaskView):
 
     def __init__(self):
         self.transaction_business_logic = TransactionBusiness()
-        self.user_business_logic = UserBusiness()
-        self.item_business_logic = ItemBusiness()
 
     def index(self):
         # Lista as transacoes ativas aguardando aceitacao pelo usuario logado

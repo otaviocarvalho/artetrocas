@@ -16,7 +16,6 @@ class TransactionExchangeView(FlaskView):
     def __init__(self):
         self.transaction_business_logic = TransactionBusiness()
         self.user_business_logic = UserBusiness()
-        self.item_business_logic = ItemBusiness()
 
     def post(self):
         # Recebe os itens a serem trocados

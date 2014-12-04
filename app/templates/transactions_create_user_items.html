@@ -25,12 +25,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for key,value in list_items.iteritems() %}
+                                        {% for item in list_items %}
                                         <tr>
-                                            <td>{{key}}</td>
-                                            <td>{{value.title}}</td>
-                                            <td>{{value.school}}</td>
-                                            <td>{{value.quantity}}</td>
+                                            <td>{{item.key}}</td>
+                                            <td>{{item.title}}</td>
+                                            <td>{{item.school}}</td>
+                                            <td>{{item.quantity}}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

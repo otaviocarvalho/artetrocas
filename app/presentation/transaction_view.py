@@ -15,8 +15,6 @@ class TransactionView(FlaskView):
 
     def __init__(self):
         self.transaction_business_logic = TransactionBusiness()
-        self.user_business_logic = UserBusiness()
-        self.item_business_logic = ItemBusiness()
 
     def index(self):
         return render_template('transactions.html', list_transactions=self.transaction_business_logic.transactions_list_key(session['user']), title="Transacao")

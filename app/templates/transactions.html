@@ -43,16 +43,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for key,value in list_transactions.iteritems() %}
+                                        {% for transaction in list_transactions %}
                                         <tr>
-                                            <td>{{key}}</td>
-                                            <td>{{value.user_from}}</td>
-                                            <td>{{value.user_to}}</td>
-                                            <td>{{value.status}}</td>
-                                            <td>{{value.list_items_from}}</td>
-                                            <td>{{value.list_items_to}}</td>
-                                            <td>{{value.list_items_from_qtd}}</td>
-                                            <td>{{value.list_items_to_qtd}}</td>
+                                            <td>{{transaction.key}}</td>
+                                            <td>{{transaction.user_from}}</td>
+                                            <td>{{transaction.user_to}}</td>
+                                            <td>{{transaction.status}}</td>
+                                            <td>{{transaction.list_items_from}}</td>
+                                            <td>{{transaction.list_items_to}}</td>
+                                            <td>{{transaction.list_items_from_qtd}}</td>
+                                            <td>{{transaction.list_items_to_qtd}}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

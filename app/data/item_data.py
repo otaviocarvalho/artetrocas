@@ -11,27 +11,27 @@ list_items = {
         'user_id': 1
     },
     1: {
-        'title': 'Picasso',
+        'title': 'Guernica',
         'author': 'Picasso',
-        'description': 'Picasso',
+        'description': 'Medindo 350 por 782 cm, esta tela pintada a oleo e normalmente tratada como representativa do bombardeio sofrido pela cidade espanhola de Guernica em 26 de abril de 1937 por avioes alemaes.',
         'school': 'Cubismo',
         'type': 'Pintura a Oleo',
         'quantity': 100,
         'user_id': 1
     },
     2: {
-        'title': 'Renoir',
+        'title': 'O baile no moulin de la galette',
         'author': 'Renoir',
-        'description': 'Renoir',
+        'description': 'e uma pintura realizada a oleo sobre tela em 1876, pelo impressionista frances Pierre-Auguste Renoir, consagrada como um marco da pintura impressionista.',
         'school': 'Impressionismo',
         'type': 'Pintura a Oleo',
         'quantity': 10,
         'user_id': 2
     },
     3: {
-        'title': 'Monet',
+        'title': 'Impressao, nascer do sol',
         'author': 'Monet',
-        'description': 'Monet',
+        'description': 'E a mais celebre e importante obra do impressionista Claude Monet. E um oleo sobre tela, datado de 1872 (mas provavelmente realizado em 1873), que representa o nascer da matina no porto de Havre',
         'school': 'Impressionismo',
         'type': 'Pintura a Oleo',
         'quantity': 20,
@@ -110,22 +110,15 @@ class ItemData(object):
                 if item.type.lower().find(keyword.lower()) != -1:
                     items_list_aux.append(item)
 
-            #for key,value in self.list_items.iteritems():
-                ## Search by names
-                #if value['title'].lower().find(keyword.lower()) != -1:
-                    #items_list_aux[key] = value
-                ## Search by school
-                #elif value['school'].lower().find(keyword.lower()) != -1:
-                    #items_list_aux[key] = value
-
             return items_list_aux
 
         def get_items_user(self, user_id):
             # Montar lista de objetos
             list_aux = []
-            for item_key in self.list_items.keys():
-                if item_key == user_id:
-                    list_aux.append(self.convert_dict_to_item(self.list_items[item_key], item_key))
+            items_list = self.get_items()
+            for item in items_list:
+                if item.user_id == user_id:
+                    list_aux.append(item)
 
             return list_aux
 
@@ -171,11 +164,8 @@ class ItemData(object):
 
         def insert_new_item(self, item):
             item.key = self.generate_key()
-            print item.key
             item_dict = self.convert_item_to_dict(item)
-            print item_dict
             self.list_items[item.key] = item_dict[item.key]
-            print self.list_items
             #for key in item.keys():
                 #self.list_items[key] = item[key]
 

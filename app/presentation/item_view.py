@@ -28,10 +28,14 @@ class ItemView(FlaskView):
         self.item.description = request.form['description'].encode('utf-8')
         self.item.school = request.form['school'].encode('utf-8')
         self.item.type = request.form['type'].encode('utf-8')
-        self.item.quantity = int(request.form['quantity'].encode('utf-8'))
         self.item.user_id = session['user_id']
 
-        #print self.item_business_logic.convert_item_to_dict(self.item)
+        quantity = request.form['quantity'].encode('utf-8')
+        if quantity == '':
+            self.item.quantity = 0
+        else:
+            self.item.quantity = int(quantity)
+
         ## Insere novo item no banco de dados
         insert_result = self.item_business_logic.insert_new_item(self.item)
 

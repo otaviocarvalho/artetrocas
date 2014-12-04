@@ -9,7 +9,6 @@ app = Flask("app")
 app.secret_key = os.urandom(24)
 
 from app.presentation import home_view
-from app.presentation import user_view
 from app.presentation import search_view
 from app.presentation import item_view
 

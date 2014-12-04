@@ -20,7 +20,8 @@ class TransactionBusiness(object):
 
     def create_transaction(self, user_id):
         user = self.user_data.get_user_id(int(user_id))
-        return self.transaction_data.create_transaction(user[user.keys()[0]]['name'])
+        #return self.transaction_data.create_transaction(user[user.keys()[0]]['name'])
+        return self.transaction_data.create_transaction(user.name)
 
     # Atualiza os itens que serao enviados na troca
     def set_transaction_item_from(self, transaction_id, item_id, item_qtd):
@@ -29,7 +30,8 @@ class TransactionBusiness(object):
     # Atualiza os itens que serao recebidos na troca
     def set_transaction_item_to(self, transaction_id, user_id, item_id, item_qtd):
         user = self.user_data.get_user_id(int(user_id))
-        return self.transaction_data.set_transaction_item_to(transaction_id, user[user.keys()[0]]['name'], item_id, item_qtd)
+        #return self.transaction_data.set_transaction_item_to(transaction_id, user[user.keys()[0]]['name'], item_id, item_qtd)
+        return self.transaction_data.set_transaction_item_to(transaction_id, user.name, item_id, item_qtd)
 
     def get_transaction_by_id(self, transaction_id):
         return self.transaction_data.get_transaction_by_id(transaction_id)
@@ -46,32 +48,51 @@ class TransactionBusiness(object):
     def finish_transaction(self, transaction_id):
         # Busca dados da transacao
         transaction = self.get_transaction_by_id(transaction_id)
-        print transaction
 
         # Decrementa itens do solicitante e incrementa no solicitado
-        for index in range(len(transaction['list_items_from'])):
+        #for index in range(len(transaction['list_items_from'])):
+        for index in range(len(transaction.list_items_from)):
             # Decrementa solicitante
-            item_id = int(transaction['list_items_to'][index])
+            #item_id = int(transaction['list_items_to'][index])
+            item_id = int(transaction.list_items_from[index])
             item = self.item_data.get_item(item_id)
-            quantity = item['quantity'] - int(transaction['list_items_to_qtd'][index])
-            self.item_data.set_item_quantity(item_id, quantity)
+            #quantity = item['quantity'] - int(transaction['list_items_to_qtd'][index])
+            quantity = item.quantity - int(transaction.list_items_from_qtd[index])
+            #self.item_data.set_item_quantity(item_id, quantity)
+            item.quantity = quantity
+            self.item_data.insert_item(item)
+
             # Adiciona ao solicitado
             item_insert = copy.deepcopy(item)
-            item_insert['user_id'] = self.user_data.get_user_key(transaction['user_to']).keys()[0]
-            item_insert['quantity'] = int(transaction['list_items_to_qtd'][index])
+            #item_insert['user_id'] = self.user_data.get_user_key(transaction['user_to']).keys()[0]
+            item_insert.user_id = self.user_data.get_user_key(transaction.user_to)[0].key
+            print transaction.user_to
+            print self.user_data.get_user_key(transaction.user_to)[0].key
+            #item_insert['quantity'] = int(transaction['list_items_to_qtd'][index])
+            item_insert.quantity = int(transaction.list_items_from_qtd[index])
             self.item_data.insert_new_item(item_insert)
 
         # Decrementa itens do solicitado e incrementa no solicitante
-        for index in range(len(transaction['list_items_to'])):
+        #for index in range(len(transaction['list_items_to'])):
+        for index in range(len(transaction.list_items_to)):
             # Decrementa solicitado
-            item_id = int(transaction['list_items_from'][index])
+            #item_id = int(transaction['list_items_from'][index])
+            item_id = int(transaction.list_items_to[index])
             item = self.item_data.get_item(item_id)
-            quantity = item['quantity'] - int(transaction['list_items_from_qtd'][index])
-            self.item_data.set_item_quantity(item_id, quantity)
+            #quantity = item['quantity'] - int(transaction['list_items_from_qtd'][index])
+            quantity = item.quantity - int(transaction.list_items_to_qtd[index])
+            #self.item_data.set_item_quantity(item_id, quantity)
+            item.quantity = quantity
+            self.item_data.insert_item(item)
+
             # Adiciona ao solicitante
             item_insert = copy.deepcopy(item)
-            item_insert['user_id'] = self.user_data.get_user_key(transaction['user_from']).keys()[0]
-            item_insert['quantity'] = int(transaction['list_items_from_qtd'][index])
+            #item_insert['user_id'] = self.user_data.get_user_key(transaction['user_from']).keys()[0]
+            item_insert.user_id = self.user_data.get_user_key(transaction.user_from)[0].key
+            print transaction.user_from
+            print self.user_data.get_user_key(transaction.user_from)[0].key
+            #item_insert['quantity'] = int(transaction['list_items_from_qtd'][index])
+            item_insert.quantity = int(transaction.list_items_to_qtd[index])
             self.item_data.insert_new_item(item_insert)
 
         return self.transaction_data.finish_transaction(transaction_id)
